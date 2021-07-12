@@ -1,0 +1,53 @@
+<h1>Registration Form</h1>
+
+<form #userForm="ngForm" (ngSubmit)="onSubmit()">
+
+    <!-- <h1>{{ userForm.value | json }}</h1> -->
+
+  <div class="form-group">
+    <label for="firstName">First Name</label>
+    <input type="text" id="firstname" name="firstname"  [(ngModel)]="employee.FirstName" [ngModelOptions]="{standalone: true}">
+ 
+
+    <!-- <label for="">First Name</label>
+    <input type="text" ngModel name="firstName" class="form-control"  #firstName="ngModel" required ngModel />
+    <span class="help-bpx" *ngIf="firstName.touched && !firstName.valid ">Please enter the firstName</span>  -->
+  </div>
+
+  <div class="form-group">
+    <label for="lastname">Last Name </label>
+    <input type="text" id="lastname" name="lastname" [(ngModel)]="employee.LastName" [ngModelOptions]="{standalone: true}">
+    <!-- <label for="">Last Name</label>
+    <input type="text" ngModel name="lastName" class="form-control" required ngModel/> -->
+  </div>
+
+  <div class="form-group">
+    <label for="Age">Age</label>
+    <input type="number" id="age" name="age" required  [(ngModel)]="employee.Age" [ngModelOptions]="{standalone: true}">
+ 
+
+    <!-- <input type="text" ngModel name="age" class="form-control" required ngModel/> -->
+  </div>
+
+  <mat-form-field>
+    <input [(ngModel)]="employee.DateOfJoining" matInput [matDatepicker]="picker" placeholder="Date of Joining" [ngModelOptions]="{standalone: true}">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker startView="year" [startAt]="startDate"></mat-datepicker>
+  </mat-form-field>
+  
+  <div class="form-group">
+    <label for="">Department Name</label>
+    <select  [(ngModel)]="employee.Department" class="form-control"  name="departmentName" [ngModelOptions]="{standalone: true}">
+      <option *ngFor="let department of departments">{{ department['departmentName'] }}</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="">Designation</label>
+    <select  class="form-control"  name="designation" [(ngModel)]="employee.Designation" [ngModelOptions]="{standalone: true}">
+      <option *ngFor="let designation of designations">{{ designation }}</option>
+    </select>
+  </div>
+
+  <input type="submit" value="Submit" class="btn btn-primary"/>
+</form>
