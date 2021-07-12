@@ -1,5 +1,5 @@
 export class Designation {
-    DesignationId:number;
-    DesignationName:string;
-    DepartmentId:number
+    designationId:number;
+    designationName:string;
+    departmentId:number;
 }

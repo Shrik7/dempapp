@@ -34,17 +34,56 @@ export class PostFormComponent implements OnInit {
       Age: null,
       DateOfJoining:"",
       Department:"",
-    //DepartmentId:null,
-    Designation:""
+      DepartmentId: null,
+      Designation:"",
+      DesignationId: null
     };
 
-    this.departmentService.getDepartments().subscribe(
-      data => {
-        console.log("Retrieved departments: " + JSON.stringify(data));
-        this.departments = data;
-        console.log(this.departments);
+    // this.departmentService.getDepartments().subscribe(
+    //   data => {
+    //     console.log("Retrieved departments: " + JSON.stringify(data));
+    //     this.departments = data;
+    //     console.log(this.departments);
+    //   }
+    // );
+
+    this.departments = [
+      {
+        departmentId: 1,
+        departmentCode: 1,
+        departmentName: "Admin",
+        designation: null
+      },
+      {
+        departmentId: 2,
+        departmentCode: 2,
+        departmentName: "IT",
+        designation: null
+      },
+      {
+        departmentId: 3,
+        departmentCode: 3,
+        departmentName: "Finance",
+        designation: null
       }
-    );
+    ];
+    this.designations = [
+      {
+        designationId:1,
+        designationName:"Manager",
+        departmentId:1
+      },
+      {
+        designationId:2,
+        designationName:"Team Lead",
+        departmentId:2
+      },
+      {
+        designationId:3,
+        designationName:"Analyst",
+        departmentId:3
+      }
+    ]
     
   }
 
@@ -54,7 +93,22 @@ export class PostFormComponent implements OnInit {
     });
   }
 
+  onChange() {
+    this.departments.forEach(department => {
+      if(department.departmentName === this.employee.Department) {
+        this.employee.DepartmentId = department.departmentId;
+      }
+    });
+    this.designations.forEach(designation => {
+      if(this.employee.DepartmentId === designation.departmentId) {
+        this.employee.Designation = designation.designationName;
+        this.employee.DesignationId = designation.designationId;
+      }
+    });
+  }
+
   onSubmit() {
+    console.log(this.employee);
     console.log(this.employee);
     this.saveUser();
   }
@@ -63,7 +117,10 @@ export class PostFormComponent implements OnInit {
   saveUser() {
     //this.employee.DepartmentId=this.departments.filter(value=>value['departmentName']===this.employee.Department)[0].DepartmentId;
     //delete this.employee.Department;
-    this.employeeService.createUser(this.employee).subscribe(data => {
+    let requestData = this.employee;
+    delete requestData.Department;
+    delete requestData.Designation;
+    this.employeeService.createUser(requestData).subscribe(data => {
       console.log(data);
       alert("User added successfully");
     },
